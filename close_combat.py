@@ -117,8 +117,49 @@ class CloseCombatSim:
         else:
             return False
 
+    def assault_specialists_present(self):
+        for unit in self.a_units + self.b_units:
+            if unit.assault_specialist:
+                return True
+        return False
+    
+    def a_unit_assault_specialists_actions(self):
+        for unit in self.a_units:
+            target = self.b_units[0]
+            for d in range(unit.attack_dice):
+                if self.hit_roll(unit, target):
+                    self.kill_roll(unit, target)
+
+    def b_unit_assault_specialists_actions(self):
+        for unit in self.b_units:
+            target = self.a_units[0]
+            for d in range(unit.attack_dice):
+                if self.hit_roll(unit, target):
+                    self.kill_roll(unit, target)
+
     def run_battle(self):
         rounds = 0
+
+        """ 
+        Current assumptions:
+        - one side has assault specialists
+        - all units on the side with assault specialists are assault specialists
+            - this is going to complicate things - vic does not have assault specialist, so now what
+        - side a is the one with the assault specialists
+        """
+        if self.assault_specialists_present():
+            while True:
+                rounds += 1
+                self.a_unit_assault_specialists_actions()
+                self.post_round_dead_check()
+                if self.fight_is_over():
+                    results = {"a_units":self.a_units, "b_units":self.b_units, "rounds":rounds}
+                    return results
+                self.b_unit_assault_specialists_actions()
+                if self.post_round_dead_check():
+                    results = {"a_units":self.a_units, "b_units":self.b_units, "rounds":rounds}
+                    return results
+
         while True:
             rounds += 1
             """ print(f"Starting round {rounds}")
@@ -136,3 +177,13 @@ class CloseCombatSim:
                 results = {"a_units":self.a_units, "b_units":self.b_units, "rounds":rounds}
                 return results
         
+
+# Assault specialist - we go first, then see if they're dead, check if done, then bad guys - check if done, continue until finished
+
+
+
+# Need to account for some units having assault specialist, some not
+# Need to account for toughness and strength differences
+# Need to account for choosing specific targets - but if he's shooting at my vic, he's not shooting at me, so we get the benefit of that...
+
+# The hacks are coming back to me

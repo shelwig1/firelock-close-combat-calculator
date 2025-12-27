@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 @dataclass
-class UnitClass:
+class Unit:
     health: int
     accuracy: int
     strength: float
@@ -9,6 +9,8 @@ class UnitClass:
     attack_dice: int
     pin: int = 0
     added_pin: int = 0
+    vehicle: bool = False
+    assault_specialist: bool = False
     # This needs to factor in other modifiers, silly billy
     # Have this be input arguments to the UnitClass and go from there
 

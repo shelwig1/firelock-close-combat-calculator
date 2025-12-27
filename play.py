@@ -1,21 +1,24 @@
-from unit_class import UnitClass
-from core import Experiment, CloseCombatSim
-grenadier = UnitClass(
+from unit_class import Unit
+from close_combat import Experiment, CloseCombatSim
+
+grenadier = Unit(
     health=2,
     accuracy=3,
-    strength = 1,
+    strength = 1.5,
     toughness = 1,
     attack_dice = 2,
+    assault_specialist = True
 )
 
-chasseur = UnitClass(
+
+chasseur = Unit(
     health=2,
-    accuracy=0,
+    accuracy=1,
     strength=1,
     toughness=1.5,
     attack_dice=2,
 )
 
-new = Experiment(1000, [grenadier, grenadier], [chasseur])
+new = Experiment(10000, [grenadier, grenadier], [chasseur])
 #new = CloseCombatSim( [grenadier], [chasseur])
 #new.run_battle()

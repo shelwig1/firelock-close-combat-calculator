@@ -1,11 +1,11 @@
-from unit_class import UnitClass
+from unit_class import Unit
 
 # Generate random numbers, show me things over time
 
 # Display average number of rounds to resolve
 # Percentage of rounds that each side wins, including draws
 
-grenadier = UnitClass(
+grenadier = Unit(
     health=2,
     accuracy=4,
     strenght=1,
@@ -14,7 +14,7 @@ grenadier = UnitClass(
     pin=0
 )
 
-wolf = UnitClass(
+wolf = Unit(
     health=2,
     accuracy=3,
     strenght=1,
